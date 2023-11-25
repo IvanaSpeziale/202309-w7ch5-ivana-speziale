@@ -19,6 +19,6 @@ server.on('listening', () => {
   debug('Listening on port', PORT);
 });
 
-/* Server.on('error', (error) => {
+server.on('error', (error) => {
   debug(`Error ${error.message}`);
-}); */
+});
