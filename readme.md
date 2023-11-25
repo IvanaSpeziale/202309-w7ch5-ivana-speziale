@@ -1,55 +1,25 @@
-Week 7 - Challenge 1
-API REST Things I already know / Lo que queráis (II)
-Continuamos el API REST del Challenge anterior, que se conecte a un fichero JSON, para manipular recursos de tipo cosas que ya sé (o cualquier otro).
+Week 7 - Challenge WeekEnd
+Red social
+Crea una red social con React. La aplicación sólo se puede usar estando logueado (en abierto únicamente se puede ver login y registro), y una vez iniciada la sesión, el usuario puede ver un listado de todos los usuarios de la red.
 
-Recordemos que el JSON tendrá una sola propiedad de tipo array, donde almacenarán objetos que representarán cosas que hemos aprendido en el bootcamp (o cualquier otro modelo).
+El usuario podrá editar su perfil.
 
-El modelo de datos estará representado como "entity" en una carpeta/fichero independiente.
-El repositorio y el controller son clases que se instancian en el Router.
-Les errores se controlan mediante un middleware de errores.
-Se testa el 100% del backend.
+De cada usuario podrá ver su perfil, y podrá añadirlo como amigo o como enemigo (o cambiar entre ambos). Es decir, yo como usuario veo todos los demás usuarios, y además puedo tener una relación con algunos de ellos. Esa relación puede ser de amigo o de enemigo (recuerda: puede no haber relación).
 
----
+En el listado de usuarios debe poder haber un filtro para enseñar:
 
-Week 6 - Challenge 5
-API REST Things I already know / Lo que queráis
-Crea una API REST que se conecte a un fichero JSON, para manipular recursos de tipo cosas que ya sé. El JSON tendrá una sola propiedad de tipo array, donde almacenarán objetos que representarán cosas que hemos aprendido en el bootcamp.
+todos los usuarios
+sólo los amigos
+sólo los enemigos
+El listado debe mostrar el total de usuarios (o amigos/enemigos si se ha usado el filtro).
 
-La API REST debe tener los siguientes endpoints:
+La red social consumirá los datos de una API desarrollada con Express, conectada a una base de datos en MongoDB. La validación de usuario se implementará mediante JWT.
 
-[GET] /things -> devuelve el array de cosas que ya sé
+Extra
+La API mantendrá un log de todas las relaciones, almacenado en un archivo de texto en el servidor. Cada vez que se cree o destruya una relación (de cualquiera de los dos tipos), se debe añadir una línea al log, con uno de estos tres formatos:
 
-[GET] /things/:idThing -> devuelve una cosa que ya sé
+New relationship: Luis & Marta (friends)
 
-[DELETE] /things/:idThing -> borra una cosa que ya sé
+New relationship: Luis & Marta (enemies)
 
-[POST] /things -> crea una cosa que ya sé (la recibe en el body)
-
-[PATCH] /things/:id -> modifica una cosa que ya sé (la recibe en el body)
-
-Usamos express con las capas:
-
-app
-router
-controller
-model
-(opcional repo)
-AÑADIMOS un front con REDUX testado
-
-Lista de 'things'
-
-Añadir 'thing'
-
-Borrar 'thing'
-
-Editar 'thing'
-
-Página de detalle
-
----
-
-Viajes: Registro de Lugares Favoritos
-
-Permite a los usuarios registrar sus lugares favoritos para viajar.
-Operaciones CRUD para agregar, ver, actualizar y eliminar lugares.
-Campos: nombre del lugar, descripción, ubicación, fecha de visita, etc.
+Removed relationship: Luis & Marta
