@@ -6,13 +6,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "start:dev": "cross-env PORT=2700 DEBUG=w7E* nodemon dist/index.js",
+    "start:dev": "cross-env PORT=2800 DEBUG=w7E* nodemon dist/index.js",
     "build:ts": "tsc -w",
     "build:prod": "tsc",
     "test": "jest --watchAll --coverage",
     "test:prod": "jest --watchAll --watchAll=false --coverage --passWithNoTests",
-    "prepare": "husky install",
-    "api": "json-server --watch data/db.json"
+    "prepare": "husky install"
   },
   "keywords": [],
   "license": "ISC",
