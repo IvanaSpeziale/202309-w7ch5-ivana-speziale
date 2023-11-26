@@ -33,4 +33,33 @@ export class UsersController extends Controller<User> {
       next(error);
     }
   }
+
+  async addFriend(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await this.repo.addFriend(req.params.id, req.body);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async addEnemy(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await this.repo.addEnemy(req.params.id, req.body);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      await this.repo.delete(req.params.id);
+      res.status(204);
+      res.statusMessage = 'No Content';
+      res.json({});
+    } catch (error) {
+      next(error);
+    }
+  }
 }

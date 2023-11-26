@@ -49,23 +49,48 @@ export class UsersMongoRepo implements Repository<User> {
     return result;
   }
 
+  async addFriend(id: string, updatedItem: Partial<User>): Promise<User> {
+    try {
+      const result = await UserModel.findByIdAndUpdate(
+        updatedItem.id,
+        { $push: { friends: id } },
+        { new: true }
+      ).exec();
+
+      if (!result) {
+        throw new HttpError(404, 'Not Found', 'Update not possible');
+      }
+
+      return result;
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        if (error.name === 'MongoError' && (error as any).code === 11000) {
+          throw new HttpError(400, 'Bad Request', 'Friend already in the list');
+        }
+
+        throw new HttpError(500, 'Internal Server Error', error.message);
+      }
+
+      return {} as User;
+    }
+  }
+
+  async addEnemy(id: string, updatedItem: Partial<User>): Promise<User> {
+    const result = await UserModel.findByIdAndUpdate(
+      updatedItem.id,
+      { $push: { enemies: id } },
+      {
+        new: true,
+      }
+    ).exec();
+    if (!result) throw new HttpError(404, 'Not Found', 'Update not possible');
+    return result;
+  }
+
   async delete(id: string): Promise<void> {
-    const result = await UserModel.findByIdAndDelete(id)
-      .populate('author', {
-        notes: 0,
-      })
-      .exec();
+    const result = await UserModel.findByIdAndDelete(id).exec();
     if (!result) {
       throw new HttpError(404, 'Not Found', 'Delete not possible');
     }
-
-    const userID = result.author.id;
-    const user = await this.userRepo.getById(userID);
-    // Temp const deletedNoteID = new mongoose.mongo.ObjectId(id);
-    user.notes = user.notes.filter((item) => {
-      const itemID = item as unknown as mongoose.mongo.ObjectId;
-      return itemID.toString() !== id; // Temp deletedNoteID.toString();
-    });
-    await this.userRepo.update(userID, user);
   }
 }

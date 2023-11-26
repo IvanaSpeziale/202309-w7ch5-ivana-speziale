@@ -27,12 +27,14 @@ export abstract class Auth {
     return jwt.sign(payload, Auth.secret!);
   }
 
-  static verifyAndGetPayload(token: string) {
+  static verifyAndGetPayload(token: string): TokenPayload {
     try {
       const result = jwt.verify(token, Auth.secret!);
-      if (typeof result === 'string')
+      if (typeof result === 'string') {
         throw new HttpError(498, 'Invalid token', result);
-      return result as TokenPayload;
+      }
+
+      return result as unknown as TokenPayload;
     } catch (error) {
       throw new HttpError(498, 'Invalid token', (error as Error).message);
     }
