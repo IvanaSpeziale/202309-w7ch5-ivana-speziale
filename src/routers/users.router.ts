@@ -16,11 +16,11 @@ const interceptor = new AuthInterceptor();
 usersRouter.get('/', controller.getAll.bind(controller));
 usersRouter.post('/register', controller.create.bind(controller));
 usersRouter.post('/login', controller.login.bind(controller));
-usersRouter.patch(
+/* UsersRouter.patch(
   '/login',
   interceptor.authorization.bind(interceptor),
   controller.login.bind(controller)
-);
+); */
 /* UsersRouter.patch(
   '/addFriend',
   interceptor.authorization.bind(interceptor),
@@ -32,7 +32,6 @@ usersRouter.patch(
   interceptor.authorization.bind(interceptor),
   controller.addFriend.bind(controller)
 );
-// Añadir usuario a enemigos
 usersRouter.patch(
   '/add-enemy/:id',
   interceptor.authorization.bind(interceptor),
