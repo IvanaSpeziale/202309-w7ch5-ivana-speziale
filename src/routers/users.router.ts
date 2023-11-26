@@ -21,3 +21,8 @@ usersRouter.patch(
   interceptor.authorization.bind(interceptor),
   controller.login.bind(controller)
 );
+usersRouter.patch(
+  '/addFriend',
+  interceptor.authorization.bind(interceptor),
+  controller.login.bind(controller)
+);

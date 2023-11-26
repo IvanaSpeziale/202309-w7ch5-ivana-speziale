@@ -8,5 +8,6 @@ export type User = LoginUser & {
   name: string;
   surname: string;
   age: number;
-  notes: string;
+  friends: User[];
+  enemies: User[];
 };

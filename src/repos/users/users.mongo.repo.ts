@@ -49,7 +49,23 @@ export class UsersMongoRepo implements Repository<User> {
     return result;
   }
 
-  delete(_id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  async delete(id: string): Promise<void> {
+    const result = await UserModel.findByIdAndDelete(id)
+      .populate('author', {
+        notes: 0,
+      })
+      .exec();
+    if (!result) {
+      throw new HttpError(404, 'Not Found', 'Delete not possible');
+    }
+
+    const userID = result.author.id;
+    const user = await this.userRepo.getById(userID);
+    // Temp const deletedNoteID = new mongoose.mongo.ObjectId(id);
+    user.notes = user.notes.filter((item) => {
+      const itemID = item as unknown as mongoose.mongo.ObjectId;
+      return itemID.toString() !== id; // Temp deletedNoteID.toString();
+    });
+    await this.userRepo.update(userID, user);
   }
 }
