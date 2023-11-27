@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import mongoose, { Error } from 'mongoose';
 import { HttpError } from '../types/http.error.js';
 import createDebug from 'debug';
-const debug = createDebug('w7E:error:middleware');
+const debug = createDebug('W8E:error:middleware');
 
 debug('Starting');
 export const errorMiddleware = (

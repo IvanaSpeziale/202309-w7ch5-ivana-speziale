@@ -1,11 +1,11 @@
 import { hash, compare } from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken'; // Tenemos que hacer importacion default pq no soporta la otra.
 import 'dotenv/config';
-import createDebug from 'debug';
 import { User } from '../entities/user.js';
+import createDebug from 'debug';
 import { HttpError } from '../types/http.error.js';
-const debug = createDebug('w7E:auth');
 
+const debug = createDebug('W8E:auth');
 debug('Imported');
 export type TokenPayload = {
   id: User['id'];
@@ -19,12 +19,12 @@ export abstract class Auth {
     return hash(value, saltRound);
   }
 
-  static compare(value: string, hash: string): Promise<boolean> {
+  static comparison(value: string, hash: string): Promise<boolean> {
     return compare(value, hash);
   }
 
   static signJWT(payload: TokenPayload) {
-    return jwt.sign(payload, Auth.secret!);
+    return jwt.sign(payload, Auth.secret!); // Esto es el token. Ponemos ! para decirle que no va a valer null y no chille. Tb podríamos poner una guarda.
   }
 
   static verifyAndGetPayload(token: string) {

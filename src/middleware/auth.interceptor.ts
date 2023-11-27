@@ -3,7 +3,8 @@ import { NextFunction, Request, Response } from 'express';
 import { HttpError } from '../types/http.error.js';
 import { Auth } from '../services/auth.js';
 import { UsersMongoRepo } from '../repos/users/users.mongo.repo.js';
-const debug = createDebug('w7E:auth:interceptor');
+
+const debug = createDebug('W8E:auth:interceptor');
 
 export class AuthInterceptor {
   constructor() {
@@ -26,12 +27,10 @@ export class AuthInterceptor {
 
   async authentication(req: Request, res: Response, next: NextFunction) {
     try {
-      // Eres el usuario
-      const userID = req.body.userId;
-      // Quieres actuar sobre la nota
-      const usersID = req.params.id;
+      const userID = req.body.id;
+      const userToAddID = req.params.id;
       const repoUsers = new UsersMongoRepo();
-      const user = await repoUsers.getById(usersID);
+      const user = await repoUsers.getById(userToAddID);
       if (user.id !== userID)
         throw new HttpError(401, 'Unauthorized', 'User not valid');
       next();

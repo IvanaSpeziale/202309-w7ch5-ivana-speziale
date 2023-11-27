@@ -5,7 +5,7 @@ import { Auth } from '../services/auth.js';
 import { User } from '../entities/user.js';
 import { Controller } from './controller.js';
 
-const debug = createDebug('w7E:users:controller');
+const debug = createDebug('W8E:users:controller');
 
 export class UsersController extends Controller<User> {
   constructor(protected repo: UsersMongoRepo) {

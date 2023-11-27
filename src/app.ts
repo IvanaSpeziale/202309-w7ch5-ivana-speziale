@@ -2,10 +2,11 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import createDebug from 'debug';
-import { usersRouter } from './routers/users.router.js';
-import { errorMiddleware } from './middleware/error.middleware.js';
 
-const debug = createDebug('w7E:app');
+import { errorMiddleware } from './middleware/error.middleware.js';
+import { usersRouter } from './routers/users.router.js';
+
+const debug = createDebug('W8E:app');
 
 export const app = express();
 debug('Starting');
@@ -17,4 +18,5 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.use('/users', usersRouter);
+
 app.use(errorMiddleware);

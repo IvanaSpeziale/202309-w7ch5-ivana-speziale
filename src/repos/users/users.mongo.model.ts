@@ -16,10 +16,22 @@ const usersSchema = new Schema<User>({
   },
   surname: String,
   age: Number,
-  notes: [
+  avatar: {
+    publicId: String,
+    size: Number,
+    format: String,
+    url: String,
+  },
+  friends: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Note',
+      ref: 'User',
+    },
+  ],
+  enemies: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
     },
   ],
 });
