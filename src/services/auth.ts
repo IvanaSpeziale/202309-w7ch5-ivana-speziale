@@ -1,11 +1,11 @@
 import { hash, compare } from 'bcrypt';
-import jwt from 'jsonwebtoken'; // Tenemos que hacer importacion default pq no soporta la otra.
+import jwt from 'jsonwebtoken';
 import 'dotenv/config';
 import { User } from '../entities/user.js';
 import createDebug from 'debug';
 import { HttpError } from '../types/http.error.js';
 
-const debug = createDebug('W8E:auth');
+const debug = createDebug('W7E:auth');
 debug('Imported');
 export type TokenPayload = {
   id: User['id'];

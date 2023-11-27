@@ -5,7 +5,7 @@ import { UserModel } from './users.mongo.model.js';
 import { LoginUser, User } from '../../entities/user.js';
 import { HttpError } from '../../types/http.error.js';
 
-const debug = createDebug('W8E:users:mongo:repo');
+const debug = createDebug('W7E:users:mongo:repo');
 
 export class UsersMongoRepo implements Repository<User> {
   constructor() {
@@ -217,7 +217,6 @@ export class UsersMongoRepo implements Repository<User> {
 
       return updatedUser;
     } catch (error) {
-      // Puedes manejar el error según tus necesidades
       throw error;
     }
   }

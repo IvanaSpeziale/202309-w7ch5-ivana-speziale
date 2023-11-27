@@ -5,7 +5,7 @@ import { UsersMongoRepo } from '../repos/users/users.mongo.repo.js';
 import { AuthInterceptor } from '../middleware/auth.interceptor.js';
 import { FileInterceptor } from '../middleware/file.interceptor.js';
 
-const debug = createDebug('W8E:users:router');
+const debug = createDebug('W7E:users:router');
 
 export const usersRouter = createRouter();
 debug('Starting');
