@@ -16,8 +16,24 @@ const usersSchema = new Schema<User>({
   },
   surname: String,
   age: Number,
-  friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-  enemies: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  avatar: {
+    publicId: String,
+    size: Number,
+    format: String,
+    url: String,
+  },
+  friends: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
+  enemies: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
 });
 
 usersSchema.set('toJSON', {

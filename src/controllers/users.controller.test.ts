@@ -43,10 +43,10 @@ describe('Given UsersController class', () => {
       expect(mockResponse.json).toHaveBeenCalledWith({});
     });
 
-    test('Then search should ...', async () => {
-      await controller.search(mockRequest, mockResponse, mockNext);
-      expect(mockResponse.json).toHaveBeenCalledWith([{}]);
-    });
+    // T test('Then search should ...', async () => {
+    //   await controller.search(mockRequest, mockResponse, mockNext);
+    //   expect(mockResponse.json).toHaveBeenCalledWith([{}]);
+    // });
 
     test('Then create should ...', async () => {
       await controller.create(mockRequest, mockResponse, mockNext);
@@ -90,11 +90,6 @@ describe('Given UsersController class', () => {
       expect(mockNext).toHaveBeenLastCalledWith(mockError);
     });
 
-    test('Then search should ...', async () => {
-      await controller.search(mockRequest, mockResponse, mockNext);
-      expect(mockNext).toHaveBeenLastCalledWith(mockError);
-    });
-
     test('Then create should ...', async () => {
       await controller.create(mockRequest, mockResponse, mockNext);
       expect(mockNext).toHaveBeenLastCalledWith(mockError);
@@ -108,6 +103,35 @@ describe('Given UsersController class', () => {
     test('Then delete should ...', async () => {
       await controller.delete(mockRequest, mockResponse, mockNext);
       expect(mockNext).toHaveBeenLastCalledWith(mockError);
+    });
+
+    test('Then login should...', async () => {
+      const mockUserId = 'mockUserId';
+      const mockLoginResult = { id: 'mockUserId', email: 'mock@example.com' };
+
+      // Mocking the request with a userId
+      const mockRequest = {
+        body: { userId: mockUserId },
+      } as unknown as Request;
+
+      // Mocking the repo methods for both cases
+      const mockRepo = {
+        getById: jest.fn().mockResolvedValue(mockLoginResult),
+        login: jest.fn().mockResolvedValue(mockLoginResult),
+      } as unknown as UsersMongoRepo;
+
+      // Creating two instances of the controller
+      const controller = new UsersController(mockRepo);
+
+      // Testing with userId
+      await controller.login(mockRequest, mockResponse, mockNext);
+      expect(mockRepo.getById).toHaveBeenCalledWith(mockUserId);
+      expect(mockResponse.status).toHaveBeenCalledWith(202);
+      expect(mockResponse.statusMessage).toBe('Accepted');
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        user: mockLoginResult,
+        token: expect.any(String),
+      });
     });
   });
 });

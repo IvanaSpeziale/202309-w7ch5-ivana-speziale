@@ -5,7 +5,7 @@ import { Auth } from '../services/auth.js';
 import { User } from '../entities/user.js';
 import { Controller } from './controller.js';
 
-const debug = createDebug('w7E:users:controller');
+const debug = createDebug('W8E:users:controller');
 
 export class UsersController extends Controller<User> {
   constructor(protected repo: UsersMongoRepo) {
@@ -29,35 +29,6 @@ export class UsersController extends Controller<User> {
       res.status(202);
       res.statusMessage = 'Accepted';
       res.json(data);
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async addFriend(req: Request, res: Response, next: NextFunction) {
-    try {
-      const result = await this.repo.addFriend(req.params.id, req.body);
-      res.json(result);
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async addEnemy(req: Request, res: Response, next: NextFunction) {
-    try {
-      const result = await this.repo.addEnemy(req.params.id, req.body);
-      res.json(result);
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async delete(req: Request, res: Response, next: NextFunction) {
-    try {
-      await this.repo.delete(req.params.id);
-      res.status(204);
-      res.statusMessage = 'No Content';
-      res.json({});
     } catch (error) {
       next(error);
     }
