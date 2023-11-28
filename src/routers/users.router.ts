@@ -39,11 +39,12 @@ usersRouter.patch(
   controller.addEnemy.bind(controller)
 );
 
-// A usersRouter.patch( // Token JWT
-//   '/login',
-//   interceptor.authorization.bind(interceptor),
-//   controller.login.bind(controller)
-// );
+usersRouter.patch(
+  // Token JWT
+  '/login',
+  interceptor.authorization.bind(interceptor),
+  controller.login.bind(controller)
+);
 usersRouter.patch(
   '/:id',
   interceptor.authorization.bind(interceptor),
