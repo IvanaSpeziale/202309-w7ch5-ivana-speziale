@@ -55,8 +55,9 @@ usersRouter.patch(
 
 usersRouter.delete(
   '/:id',
-  // Add ADMIN interceptor.authorization.bind(interceptor),
-  // interceptor.authentication.bind(interceptor),
+  interceptor.authorization.bind(interceptor),
+  interceptor.isAdmin.bind(interceptor),
+  /* Interceptor.authentication.bind(interceptor), */
   controller.delete.bind(controller)
 );
 

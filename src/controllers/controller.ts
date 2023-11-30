@@ -1,8 +1,6 @@
 import { Repository } from '../repos/repo.js';
 import { NextFunction, Request, Response } from 'express';
 import { MediaFiles } from '../services/media.files.js';
-import { HttpError } from '../types/http.error.js';
-
 export abstract class Controller<T extends { id: unknown }> {
   cloudinaryService: MediaFiles;
   // eslint-disable-next-line no-unused-vars
@@ -30,12 +28,6 @@ export abstract class Controller<T extends { id: unknown }> {
 
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      if (!req.file)
-        throw new HttpError(406, 'Not acceptable', 'Invalid multer fie');
-
-      const imgData = await this.cloudinaryService.uploadImage(req.file.path);
-      req.body.avatar = imgData;
-
       const result = await this.repo.create(req.body);
       res.status(201);
       res.statusMessage = 'Created';

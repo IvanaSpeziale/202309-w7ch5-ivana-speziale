@@ -5,8 +5,9 @@ import { Auth } from '../services/auth.js';
 import { User } from '../entities/user.js';
 import { Controller } from './controller.js';
 import { HttpError } from '../types/http.error.js';
+import { LoginResponse } from '../types/login.response.js';
 
-const debug = createDebug('W7E:users:controller');
+const debug = createDebug('W8E:users:controller');
 
 export class UsersController extends Controller<User> {
   constructor(protected repo: UsersMongoRepo) {
@@ -20,11 +21,12 @@ export class UsersController extends Controller<User> {
         ? await this.repo.getById(req.body.userId)
         : await this.repo.login(req.body);
 
-      const data = {
+      const data: LoginResponse = {
         user: result,
         token: Auth.signJWT({
           id: result.id,
           email: result.email,
+          role: result.role,
         }),
       };
       res.status(202);
@@ -38,10 +40,9 @@ export class UsersController extends Controller<User> {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       if (!req.file)
-        throw new HttpError(406, 'Not acceptable', 'Invalid multer fie');
+        throw new HttpError(406, 'Not Acceptable', 'Invalid multer file');
       const imgData = await this.cloudinaryService.uploadImage(req.file.path);
       req.body.avatar = imgData;
-
       super.create(req, res, next);
     } catch (error) {
       next(error);

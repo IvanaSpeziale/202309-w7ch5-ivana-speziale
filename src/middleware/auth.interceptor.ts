@@ -19,6 +19,7 @@ export class AuthInterceptor {
       const token = tokenHeader.split(' ')[1];
       const tokenPayload = Auth.verifyAndGetPayload(token);
       req.body.userId = tokenPayload.id;
+      req.body.tokenRole = tokenPayload.role;
       next();
     } catch (error) {
       next(error);
@@ -33,6 +34,16 @@ export class AuthInterceptor {
       const user = await repoUsers.getById(userToAddID);
       if (user.id !== userID)
         throw new HttpError(401, 'Unauthorized', 'User not valid');
+      next();
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  isAdmin(req: Request, res: Response, next: NextFunction) {
+    try {
+      if (req.body.tokenRole !== 'Admin')
+        throw new HttpError(403, 'Forbidden', 'Not authorized ');
       next();
     } catch (error) {
       next(error);

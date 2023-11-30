@@ -1,16 +1,12 @@
 import { hash, compare } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
-import { User } from '../entities/user.js';
 import createDebug from 'debug';
 import { HttpError } from '../types/http.error.js';
+import { TokenPayload } from '../types/token.payload.js';
 
 const debug = createDebug('W7E:auth');
 debug('Imported');
-export type TokenPayload = {
-  id: User['id'];
-  email: string;
-} & jwt.JwtPayload;
 
 export abstract class Auth {
   static secret = process.env.JWT_SECRET;
