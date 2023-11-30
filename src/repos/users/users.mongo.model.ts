@@ -19,6 +19,8 @@ const usersSchema = new Schema<User>({
   avatar: {
     publicId: String,
     size: Number,
+    height: Number,
+    width: Number,
     format: String,
     url: String,
   },
@@ -34,6 +36,12 @@ const usersSchema = new Schema<User>({
       ref: 'User',
     },
   ],
+  role: {
+    type: String,
+    required: true,
+    enum: ['Admin', 'User'],
+    default: 'User',
+  },
 });
 
 usersSchema.set('toJSON', {

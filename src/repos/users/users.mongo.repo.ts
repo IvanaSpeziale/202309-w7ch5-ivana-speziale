@@ -5,7 +5,7 @@ import { UserModel } from './users.mongo.model.js';
 import { LoginUser, User } from '../../entities/user.js';
 import { HttpError } from '../../types/http.error.js';
 
-const debug = createDebug('W8E:users:mongo:repo');
+const debug = createDebug('W7E:users:mongo:repo');
 
 export class UsersMongoRepo implements Repository<User> {
   constructor() {
@@ -20,7 +20,7 @@ export class UsersMongoRepo implements Repository<User> {
 
   async login(loginUser: LoginUser): Promise<User> {
     const result = await UserModel.findOne({ email: loginUser.email }).exec();
-    if (!result || !(await Auth.comparison(loginUser.passwd, result.passwd)))
+    if (!result || !(await Auth.compare(loginUser.passwd, result.passwd)))
       throw new HttpError(401, 'Unauthorized');
     return result;
   }
@@ -64,19 +64,6 @@ export class UsersMongoRepo implements Repository<User> {
     return result;
   }
 
-  // A async addFriend(id: string, updatedItem: Partial<User>): Promise<User> {
-  //   if (id === updatedItem.id) throw new HttpError(406, 'Not Acceptable', 'You can´t add yourself');
-  //   const result = await UserModel.findByIdAndUpdate(
-  //     updatedItem.id,
-  //     { $push: { friends: id } },
-  //     {
-  //       new: true,
-  //     }
-  //   ).exec();
-  //   if (!result) throw new HttpError(404, 'Not Found', 'Update not possible');
-  //   return result;
-  // }
-
   async addFriend(friendId: User['id'], userId: User['id']): Promise<User> {
     if (friendId === userId)
       throw new HttpError(406, 'Not Acceptable', 'You can´t add yourself');
@@ -118,19 +105,6 @@ export class UsersMongoRepo implements Repository<User> {
 
     return result;
   }
-
-  // Aasync addEnemy(id: string, updatedItem: Partial<User>): Promise<User> {
-  //   if (id === updatedItem.id) throw new HttpError(406, 'Not Acceptable', 'You can´t add yourself');
-  //   const result = await UserModel.findByIdAndUpdate(
-  //     updatedItem.id,
-  //     { $push: { enemies: id } },
-  //     {
-  //       new: true,
-  //     }
-  //   ).exec();
-  //   if (!result) throw new HttpError(404, 'Not Found', 'Update not possible');
-  //   return result;
-  // }
 
   async addEnemy(enemyId: User['id'], userId: User['id']): Promise<User> {
     if (enemyId === userId)
@@ -243,7 +217,6 @@ export class UsersMongoRepo implements Repository<User> {
 
       return updatedUser;
     } catch (error) {
-      // Puedes manejar el error según tus necesidades
       throw error;
     }
   }

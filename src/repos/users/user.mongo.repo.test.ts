@@ -38,7 +38,7 @@ describe('Given the class UsersMongoRepo', () => {
     });
     test('Then, when we use the create() method', async () => {
       const mockUser = {
-        userName: 'Kubo',
+        name: 'Kubo',
         password: '1234',
         firstName: 'llaalla',
         lastName: 'lalalala',
@@ -51,8 +51,8 @@ describe('Given the class UsersMongoRepo', () => {
       expect(result).toEqual(mockUser);
     });
     test('Then, when we use the search() method', async () => {
-      const key = 'userName';
-      const value = 'Kubo';
+      const key = 'name';
+      const value = 'ivana';
       const mockExec = jest.fn().mockResolvedValueOnce([{}]);
       UserModel.find = jest.fn().mockReturnValueOnce({
         exec: mockExec,
@@ -68,7 +68,7 @@ describe('Given the class UsersMongoRepo', () => {
       });
       const mockUser = {
         id: '1',
-        userName: 'Kubo',
+        name: 'ivana',
       };
       const result = await repo.update('1', mockUser);
       expect(result).toEqual([]);

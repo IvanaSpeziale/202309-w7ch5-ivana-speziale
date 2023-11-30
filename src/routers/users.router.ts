@@ -5,7 +5,7 @@ import { UsersMongoRepo } from '../repos/users/users.mongo.repo.js';
 import { AuthInterceptor } from '../middleware/auth.interceptor.js';
 import { FileInterceptor } from '../middleware/file.interceptor.js';
 
-const debug = createDebug('W8E:users:router');
+const debug = createDebug('W7E:users:router');
 
 export const usersRouter = createRouter();
 debug('Starting');
@@ -39,11 +39,12 @@ usersRouter.patch(
   controller.addEnemy.bind(controller)
 );
 
-// A usersRouter.patch( // Token JWT
-//   '/login',
-//   interceptor.authorization.bind(interceptor),
-//   controller.login.bind(controller)
-// );
+usersRouter.patch(
+  // Token JWT
+  '/login',
+  interceptor.authorization.bind(interceptor),
+  controller.login.bind(controller)
+);
 usersRouter.patch(
   '/:id',
   interceptor.authorization.bind(interceptor),
@@ -54,8 +55,9 @@ usersRouter.patch(
 
 usersRouter.delete(
   '/:id',
-  // Add ADMIN interceptor.authorization.bind(interceptor),
-  // interceptor.authentication.bind(interceptor),
+  interceptor.authorization.bind(interceptor),
+  interceptor.isAdmin.bind(interceptor),
+  /* Interceptor.authentication.bind(interceptor), */
   controller.delete.bind(controller)
 );
 

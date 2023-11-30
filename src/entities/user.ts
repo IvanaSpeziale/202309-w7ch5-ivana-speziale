@@ -13,4 +13,5 @@ export type User = LoginUser & {
   avatar: ImgData;
   friends: User[];
   enemies: User[];
+  role: 'Admin' | 'User';
 };
